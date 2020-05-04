@@ -86,9 +86,11 @@ public class Customer {
 
 			// prepare the html table to be displayed
 
-			output = "table border=\"1\"><tr>" + "<th>First Name</th>" + "<th>Last Name</th>" + "<th>Bate Of Birth</th>"
-					+ "<th>Age</th>" + "<th>Gender</th>" + "<th>Address</th>" + "<th>Phone</th>" + "<th>Email</th>"
-					+ "<th>Username</th>" + "<th>Password</th>" + "<th>Update</th><th>Remove</th><tr>";
+			output = "<table border=\"1\">"
+					+ "<tr><th>First Name</th><th>Last Name</th><th>Date Of Birth</th><th>Age</th><th>Gender</th><th>Address</th><th>Phone</th><th>Email</th>"
+					+ "<th>Username</th><th>Password</th>"
+					+ "<th>Update</th>"
+					+ "<th>Remove</th><tr>";
 
 			String query = "select * from user";
 			Statement stmt = con.createStatement();

@@ -44,7 +44,7 @@
 <title>Customer details</title>
 <link rel="stylesheet" href="Views/bootstrap.min.css">
 <script src="Components/jquery-3.2.1.min.js"></script>
-<script src="Components/main.js"></script>
+<script src="Components/customer.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -74,10 +74,9 @@
 
 					<!-- GENDER -->
 					<br> Gender: &nbsp;&nbsp;Male <input type="radio"
-						id="genderMale" name="genderMale" value="Male">
+						id="genderMale" name="gender" value="Male">
 					&nbsp;&nbsp;Female <input type="radio" id="genderFemale"
-						name="genderFemale" value="Female"
-						class="form-control form-control-sm">
+						name="gender" value="Female" class="form-control form-control-sm">
 
 					<!-- Address -->
 					<br> Address: <input type="text" id="address" name="address"
@@ -104,15 +103,13 @@
 						id="hidCustomerIDSave" name="hidCustomerIDSave value="">
 				</form>
 
-				<div id="alertSuccess" class="alert alert-success">%
-					out.print(session.getAttribute("statusMsg")); %</div>
+				<div id="alertSuccess" class="alert alert-success">
+					<% out.print(session.getAttribute("statusMsg")); %></div>
 				<div>
 					<div id="alertError" class="alert alert-danger"></div>
 
-					<br> % 
-						Customer cusObj = new Customer();
-						out.print(cusObj.readCustomer());
-					 %
+					<br> <% Customer cusObj = new Customer();
+					out.print(cusObj.readCustomer()); %>
 
 				</div>
 			</div>
