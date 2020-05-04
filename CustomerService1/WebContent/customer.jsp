@@ -1,3 +1,40 @@
+
+<%@page import="com.Customer"%>
+<%
+	// Save------------
+	if (request.getParameter("email") != null) {
+		Customer cusObj = new Customer();
+		String stsMsg = "";
+
+		//Insert--------------------------
+		if (request.getParameter("hidCustomerIDSave") == "") {
+			stsMsg = cusObj.insertCustomer(request.getParameter("firstName"), request.getParameter("lastName"),
+					request.getParameter("dob"), request.getParameter("age"), request.getParameter("gender"),
+					request.getParameter("address"), request.getParameter("phone"),
+					request.getParameter("email"), request.getParameter("username"),
+					request.getParameter("password"));
+		} else//Update----------------------
+		{
+			stsMsg = cusObj.updateCustomer(request.getParameter("hidCustomerIDSave"),
+					request.getParameter("firstName"), request.getParameter("lastName"),
+					request.getParameter("dob"), request.getParameter("age"), request.getParameter("gender"),
+					request.getParameter("address"), request.getParameter("phone"),
+					request.getParameter("email"), request.getParameter("username"),
+					request.getParameter("password"));
+		}
+		session.setAttribute("statusMsg", stsMsg);
+	}
+
+	//Delete-----------------------------
+	if (request.getParameter("hidCustomerIDDelete") != null) {
+		Customer cusObj = new Customer();
+		String stsMsg = cusObj.deleteCustomer(request.getParameter("hidCustomerIDDelete"));
+		session.setAttribute("statusMsg", stsMsg);
+	}
+%>
+
+
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -16,97 +53,68 @@
 
 				<h1 class="m-3">Customer Details</h1>
 
-				<form id="formCustomer">
+				<form id="formCustomer" name="formCustomer" method="post"
+					action=customer.jsp>
 
 					<!-- First Name -->
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="lblName">First Name: </span>
-						</div>
-						<input type="text" id="txtFName" name="txtFName">
-					</div>
+					First Name: <input type="text" id="firstName" name="firstName"
+						class="form-control form-control-sm">
 
 					<!-- Last Name -->
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="lblName">Last Name: </span>
-						</div>
-						<input type="text" id="txtLName" name="txtLName">
-					</div>
+					<br> Name: <input type="text" id="laststName" name="lastName"
+						class="form-control form-control-sm">
 
 					<!-- Birthday -->
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="lblName">Date of Birth:
-							</span>
-						</div>
-						<input type="date" id="dob" name="dob">
-					</div>
+					<br> Date of Birth: <input type="date" id="dob" name="dob"
+						class="form-control form-control-sm">
 
 					<!-- Age -->
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="lblName">Age: </span>
-						</div>
-						<input type="text" id="txtAge" name="txtAge">
-					</div>
+					<br> Age: <input type="text" id="age" name="age"
+						class="form-control form-control-sm">
 
 					<!-- GENDER -->
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="lblName">Gender: </span>
-						</div>
-						&nbsp;&nbsp;Male <input type="radio" id="rdoGenderMale"
-							name="rdoGender" value="Male"> &nbsp;&nbsp;Female <input
-							type="radio" id="rdoGenderFemale" name="rdoGender" value="Female">
-					</div>
+					<br> Gender: &nbsp;&nbsp;Male <input type="radio"
+						id="genderMale" name="genderMale" value="Male">
+					&nbsp;&nbsp;Female <input type="radio" id="genderFemale"
+						name="genderFemale" value="Female"
+						class="form-control form-control-sm">
 
 					<!-- Address -->
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="lblName">Address: </span>
-						</div>
-						<input type="text" id="txtAddress" name="txtAddress">
-					</div>
+					<br> Address: <input type="text" id="address" name="address"
+						class="form-control form-control-sm">
+
 
 					<!-- Phone -->
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="lblName">Phone Number:
-							</span>
-						</div>
-						<input type="text" id="txtPhone" name="txtPhone">
-					</div>
+					<br> Phone Number: <input type="text" id="phone" name="phone"
+						class="form-control form-control-sm">
 
 					<!-- Email -->
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="lblName">Email: </span>
-						</div>
-						<input type="text" id="txtEmail" name="txtEmail">
-					</div>
+					<br> Email: <input type="text" id="email" name="email"
+						class="form-control form-control-sm">
 
 					<!-- Username -->
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="lblName">Username: </span>
-						</div>
-						<input type="text" id="txtUName" name="txtUName">
-					</div>
+					<br> Username: <input type="text" id="username"
+						name="username" class="form-control form-control-sm">
 
 					<!-- Password -->
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="lblName">Password: </span>
-						</div>
-						<input type="text" id="txtPassword" name="txtPassword">
-					</div>
-
-					<div id="alertSuccess" class="alert alert-success"></div>
-					<div id="alertError" class="alert alert-danger"></div>
-					<input type="button" id="btnSave" value="Save"
-						class="btn btn-primary">
+					<br> Password: <input type="text" id="password"
+						name="password" class="form-control form-control-sm"> <br>
+					<input id="btnSave" name="btnSave" type="button" value="Save"
+						class="btn btn-primary"> <input type="hidden"
+						id="hidCustomerIDSave" name="hidCustomerIDSave value="">
 				</form>
+
+				<div id="alertSuccess" class="alert alert-success">%
+					out.print(session.getAttribute("statusMsg")); %</div>
+				<div>
+					<div id="alertError" class="alert alert-danger"></div>
+
+					<br> % 
+						Customer cusObj = new Customer();
+						out.print(cusObj.readCustomer());
+					 %
+
+				</div>
 			</div>
 		</div>
 		<br>
