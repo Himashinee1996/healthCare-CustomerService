@@ -24,7 +24,7 @@
 						class="form-control form-control-sm">
 
 					<!-- Last Name -->
-					<br> Name: <input type="text" id="laststName" name="lastName"
+					<br> Last Name: <input type="text" id="laststName" name="lastName"
 						class="form-control form-control-sm">
 
 					<!-- Birthday -->

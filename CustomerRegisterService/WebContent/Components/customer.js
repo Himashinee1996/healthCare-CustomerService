@@ -14,7 +14,7 @@ $(document).on("click", "#btnSave", function(event) {
 	$("#alertError").hide();
 
 	// Form validation-------------------
-	var status = validateItemForm();
+	var status = validateCustomerForm();
 	if (status != true) {
 		$("#alertError").text(status);
 		$("#alertError").show();
@@ -22,8 +22,52 @@ $(document).on("click", "#btnSave", function(event) {
 	}
 
 	// If valid------------------------
-	$("#formCustomer").submit();
-});
+var type = ($("#hidCustomerIDSave").val() == "") ? "POST" : "PUT"; 
+	
+	$.ajax( 
+	{  
+		url : "CustomerAPI",  
+		type : type,  
+		data : $("#formCustomer").serialize(),  
+		dataType : "text",  
+		complete : function(response, status)  
+		{   
+			onCustomerSaveComplete(response.responseText, status);  
+		} 
+	}); 
+}); 
+
+function onCustomerSaveComplete(response, status) 
+{  
+	if (status == "success")  
+	{   
+		var resultSet = JSON.parse(response); 
+
+		if (resultSet.status.trim() == "success")   
+		{    
+			$("#alertSuccess").text("Successfully saved.");    
+			$("#alertSuccess").show(); 
+
+			$("#divCustomerGrid").html(resultSet.data);   
+		} else if (resultSet.status.trim() == "error")   
+		{    
+			$("#alertError").text(resultSet.data);    
+			$("#alertError").show();   
+		} 
+
+	} else if (status == "error")  
+	{   
+		$("#alertError").text("Error while saving.");   
+		$("#alertError").show();  
+	} else  
+	{   
+		$("#alertError").text("Unknown error while saving..");   
+		$("#alertError").show();  
+	} 
+
+	$("#hidCustomerIDSave").val("");  
+	$("#formCustomer")[0].reset(); 
+} 
 
 // UPDATE==========================================
 $(document).on(
@@ -43,6 +87,51 @@ $(document).on(
 			$("#username").val($(this).closest("tr").find('td:eq(8)').text());
 			$("#password").val($(this).closest("tr").find('td:eq(9)').text());
 		});
+
+//REMOVE===========================================
+$(document).on("click", ".btnRemove", function(event) 
+{  
+	$.ajax(  
+	{   
+		url : "CustomerAPI",   
+		type : "DELETE",   
+		data : "userID=" + $(this).data("userID"),   
+		dataType : "text",   
+		complete : function(response, status)   
+		{    
+			onCustomerDeleteComplete(response.responseText, status);   
+		}  
+	}); 
+}); 
+
+function onCustomerDeleteComplete(response, status) 
+{  
+	if (status == "success")  
+	{   
+		var resultSet = JSON.parse(response); 
+
+		if (resultSet.status.trim() == "success")   
+		{    
+			$("#alertSuccess").text("Successfully deleted.");    
+			$("#alertSuccess").show(); 
+		
+			$("#divCustomerGrid").html(resultSet.data);   
+		} else if (resultSet.status.trim() == "error")   
+		{    
+			$("#alertError").text(resultSet.data);    
+			$("#alertError").show();   
+		}
+
+	} else if (status == "error")  
+	{   
+		$("#alertError").text("Error while deleting.");   
+		$("#alertError").show();  
+	} else  
+	{   
+		$("#alertError").text("Unknown error while deleting..");   
+		$("#alertError").show();  
+	}
+}
 
 // CLIENTMODEL=========================================================================
 function validateCustomerForm() {
