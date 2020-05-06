@@ -14,7 +14,7 @@ public class Customer {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// Provide the correct details: DBServer/DBName, username, password
-			con = DriverManager.getConnection("Jdbc:mysql://127.0.0.1:3306/healthcare?serverTimezone=UTC", "root", "");
+			con = DriverManager.getConnection("Jdbc:mysql://localhost:3306/healthcare?serverTimezone=UTC", "root", "");
 		} catch (Exception e) {
 			{
 				e.printStackTrace();
@@ -86,18 +86,19 @@ public class Customer {
 			}
 
 			// prepare the html table to be displayed
+			
+			
+			output = "<table border=\'1\'><tr><th>First Name</th><th>Last Name</th><th>Date Of Birth</th><th>Age</th><th>Gender</th></th><th>Address</th><th>Phone</th><th>Email</th><th>Username</th><th>Password</th><th>Update</th><th>Remove</th></tr>";
 
-			output = "<table border=\"1\">"
-					+ "<tr><th>First Name</th><th>Last Name</th><th>Date Of Birth</th><th>Age</th><th>Gender</th><th>Address</th><th>Phone</th><th>Email</th>"
-					+ "<th>Username</th><th>Password</th>" + "<th>Update</th>" + "<th>Remove</th><tr>";
+			
 
 			String query = "select * from user";
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
+			Statement stmt = (Statement) con.createStatement();
+			ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query);
 
 			// iterate through the rows in the result set
 			while (rs.next()) {
-				String userID = Integer.toString(rs.getInt("userID"));
+				String UserId = Integer.toString(rs.getInt("userID"));
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String dob = rs.getString("dob");
@@ -111,9 +112,9 @@ public class Customer {
 
 				// Add into the html table
 
-				output += "<tr><td><input id=\"hidCustomerIDUpdate\"name=\"hidCustomerIDUpdate\"type=\"hidden\" value=\""
-						+ userID + "\">";
-				output += "<tr><td>" + firstName + "</td>";
+				output += "<tr><td><input id='hidCustomerIDUpdate' name='hidCustomerIDUpdate' type='hidden' value='" + UserId + "'>" 
+						+ firstName + "</td>";      
+				//output += "<td>" + firstName + "</td>";
 				output += "<td>" + lastName + "</td>";
 				output += "<td>" + dob + "</td>";
 				output += "<td>" + age + "</td>";
@@ -126,8 +127,8 @@ public class Customer {
 
 				// buttons
 				output += "<td><input name='btnUpdate' type='button' value='Update'class=' btnUpdate btn btn-secondary'></<td>"
-						+ "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-userID=' "
-						+ userID + " '>" + "</td></tr>";
+						+ "<td><input name='btnRemove' type='button'value='Remove'class='btnRemove btn btn-danger' data-userid='" + UserId + "'>" 
+						 + "</td></tr>";
 
 			}
 
@@ -198,7 +199,7 @@ public class Customer {
 
 	}
 
-	public String deleteCustomer(String userID) {
+	public String deleteCustomer(String UserId) {
 
 		String output = "";
 
@@ -218,7 +219,7 @@ public class Customer {
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 
 			// Binding values
-			preparedStmt.setInt(1, Integer.parseInt(userID));
+			preparedStmt.setInt(1, Integer.parseInt(UserId));
 
 			// Executing statement
 			preparedStmt.execute();
@@ -230,7 +231,7 @@ public class Customer {
 
 		} catch (Exception e) {
 
-			output = "{\"status\":\"error\", \"data\": \"Error while deleting details.\"}";
+			output = "{\"status\":\"error\", \"data\": \"Error while deleting the details.\"}";  
 			System.err.println(e.getMessage());
 		}
 

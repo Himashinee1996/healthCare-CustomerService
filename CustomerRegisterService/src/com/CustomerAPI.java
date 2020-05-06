@@ -36,8 +36,7 @@ public class CustomerAPI extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
 	}
 
 	/**
@@ -82,7 +81,7 @@ public class CustomerAPI extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		Map paras = getParasMap(request);
-		String output = cusObj.deleteCustomer(paras.get("userID").toString());
+		String output = cusObj.deleteCustomer(paras.get("UserId").toString());
 		response.getWriter().write(output);
 	}
 

@@ -95,7 +95,7 @@ $(document).on("click", ".btnRemove", function(event)
 	{   
 		url : "CustomerAPI",   
 		type : "DELETE",   
-		data : "userID=" + $(this).data("userID"),   
+		data : "UserId=" + $(this).data("userid"),   
 		dataType : "text",   
 		complete : function(response, status)   
 		{    
@@ -136,7 +136,7 @@ function onCustomerDeleteComplete(response, status)
 // CLIENTMODEL=========================================================================
 function validateCustomerForm() {
 	// First Name
-	if ($("#firstNsme").val().trim() == "") {
+	if ($("#firstName").val().trim() == "") {
 		return "Insert first Name.";
 	}
 

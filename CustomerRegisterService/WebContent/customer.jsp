@@ -17,14 +17,14 @@
 
 				<h1>Customer Details</h1>
 
-				<form id="formCustomer" name="formCustomer">
+				<form id="formCustomer" name="formCustomer" method="post" action="customer.jsp">
 
 					<!-- First Name -->
 					First Name: <input type="text" id="firstName" name="firstName"
 						class="form-control form-control-sm">
 
 					<!-- Last Name -->
-					<br> Last Name: <input type="text" id="laststName" name="lastName"
+					<br> Last Name: <input type="text" id="lastName" name="lastName"
 						class="form-control form-control-sm">
 
 					<!-- Birthday -->
@@ -37,12 +37,13 @@
 
 					<!-- GENDER -->
 					<br> Gender: &nbsp;&nbsp;Male <input type="radio"
-						id="genderMale" name="gender" value="Male">
+						id="genderMale" name="gender" value="Male" >
 					&nbsp;&nbsp;Female <input type="radio" id="genderFemale"
-						name="gender" value="Female" class="form-control form-control-sm">
+						name="gender" value="Female" > 
+						<div class="input-group input-group-sm mb-3"></div>
 
 					<!-- Address -->
-					<br> Address: <input type="text" id="address" name="address"
+					 Address: <input type="text" id="address" name="address"
 						class="form-control form-control-sm">
 
 
@@ -63,10 +64,11 @@
 						name="password" class="form-control form-control-sm"> <br>
 					<input id="btnSave" name="btnSave" type="button" value="Save"
 						class="btn btn-primary"> <input type="hidden"
-						id="hidCustomerIDSave" name="hidCustomerIDSave value="">
+						id="hidCustomerIDSave" name="hidCustomerIDSave" value="">
 				</form>
 
-				<div id="alertSuccess" class="alert alert-success"></div>
+				<div id="alertSuccess" class="alert alert-success">
+					</div>
 				<div id="alertError" class="alert alert-danger"></div>
 
 				<br>
